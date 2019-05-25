@@ -55,7 +55,7 @@ def generate_image(
       content_layer="block5_conv2",
       content_weight=1e3,
       style_layers=['block1_conv1', 'block2_conv1', 'block3_conv1', 'block4_conv1', 'block5_conv1'],
-      styel_weight=1e-3,
+      style_weight=1e-3,
       learning_rate=1.0,
       num_iterations=1000,
       save_every=50
@@ -85,7 +85,7 @@ def generate_image(
       with tf.GradientTape() as tape:
         outputs = model(out_image)
         cost = content_weight * content_cost(outputs[0], content_activations) + \
-               styel_weight * style_cost(outputs[1:], style_activations)
+               style_weight * style_cost(outputs[1:], style_activations)
 
       grads = tape.gradient(cost, out_image)
       opt.apply_gradients([(grads, out_image)])
